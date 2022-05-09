@@ -45,7 +45,7 @@ Para proteger o acesso à aplicação, foi desenvolvida uma interface para geren
 
 * A aplicação não deve permitir o cadastro de um usuário com o nome ou email de outro usuário já cadastrado, devendo exibir uma mensagem de erro caso essa situação ocorra;
 
-* A aplicação deve ter um usuário padrão previamente cadastrado, com nome: Admin, email: admin@email.com.br e senha: 123999;
+* A aplicação deve ter um usuário padrão previamente cadastrado, com nome: Admin, email: admin@email.com.br;
 
 * O usuário padrão não pode ser editado e nem excluído da aplicação, tampouco deve ser exibido na lista de usuários cadastrados;
 
