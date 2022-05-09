@@ -1,0 +1,61 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+    <h1 class="texto-cor-especial">Detalhes da importação</h1>
+    <form>
+        <div class="form-group row">
+          <label for="staticEmail" class="col-sm-2 col-form-label">Importado em</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{importacao.data_hora_importacao}}">
+          </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Importado por</label>
+            <div class="col-sm-10">
+              <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{importacao.user}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Data transações</label>
+            <div class="col-sm-10">
+              <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{importacao.data_transacao}}">
+            </div>
+        </div>
+      </form>
+    <h1 class="texto-cor-especial">Transações importadas</h1>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="text-center" scope="col" colspan="3">Origem</th>
+                <th class="text-center" scope="col" colspan="3">Destino</th>
+                <th scope="col" rowspan="2">Valor</th>
+            </tr>
+            <tr>
+                <th scope="col">Banco</th>
+                <th scope="col">Agência</th>
+                <th scope="col">Conta</th>
+                <th scope="col">Banco</th>
+                <th scope="col">Agência</th>
+                <th scope="col">Conta</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for transacao in transacoes %}
+            <tr>
+                <td>{{transacao.banco_origem}}</td>
+                <td>{{transacao.agencia_origem}}</td>        
+                <td>{{transacao.conta_origem}}</td>
+                <td>{{transacao.banco_destino}}</td>
+                <td>{{transacao.agencia_destino}}</td>        
+                <td>{{transacao.conta_destino}}</td>  
+                <td>{{transacao.valor_transacao}}</td>         
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,56 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+    <h1 class="texto-cor-especial">Importação de arquivo</h1>
+    <form enctype="multipart/form-data" method="post" action="#" novalidate>
+        {% csrf_token %}
+        {% include 'partials/messages.html' %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <section class="alert alert-danger" role="alert">
+                    {{ error }}
+                </section>
+            {% endfor %}
+            {% if field|widget_type == 'checkboxinput' %}
+                <div class="form-group form-check">
+                    {{field|add_class:'form-check-input'}}
+                    <label class="form-check-label" for="{{ field.id_for_label }}">
+                        {{field.label}}
+                    </label>
+                </div>
+            {% else %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{field.label}}</label>
+                    {{field|add_class:'form-control'}}
+                </div>
+            {% endif %}
+        {% endfor %}
+        <button class="btn botao-cor-especial mb-3" type="submit">Enviar</button>
+    </form>
+    <h1 class="texto-cor-especial">Importações realizadas</h1>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Data das transações</th>
+                <th scope="col">Data das importações</th>
+                <th scope="col">Usuário</th>
+                <th scope="col">Opções</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for importacao in importacoes %}
+            <tr>
+                <td>{{importacao.data_transacao}}</td>
+                <td>{{importacao.data_hora_importacao}}</td> 
+                <td>{{importacao.user}}</td> 
+                <td><a class="btn botao-cor-especial btn-nohover" href="{% url 'detalhar-importacao' importacao.id %}" role="button">Detalhar</a></td>                  
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+</body>
+</html>

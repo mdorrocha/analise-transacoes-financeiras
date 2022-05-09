@@ -1,0 +1,29 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+    <h1 class="texto-cor-especial">Cadastrar Usuário</h1>
+    <form enctype="multipart/form-data" method="post" novalidate>
+        {% csrf_token %}
+        {% include 'partials/messages.html' %}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <section class="alert alert-danger" role="alert">
+                    {{ error }}
+                </section>
+            {% endfor %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{field.label}}</label>
+                {{field|add_class:'form-control'}}
+            </div>
+        {% endfor %}
+        <button class="btn botao-cor-especial mb-3" type="submit">Enviar</button>
+    </form>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,134 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+    <h1 class="texto-cor-especial">Análise de transações suspeitas</h1>
+    <form enctype="multipart/form-data" method="post" action="#" novalidate>
+        {% csrf_token %}
+        {% include 'partials/messages.html' %}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <section class="alert alert-danger" role="alert">
+                    {{ error }}
+                </section>
+            {% endfor %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{field.label}}</label>
+                {{field|add_class:'form-control'}}
+            </div>
+        {% endfor %}
+        <button class="btn botao-cor-especial mb-3" type="submit">Enviar</button>
+    </form>
+    <h1 class="texto-cor-especial">Transações suspeitas</h1>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="text-center" scope="col" colspan="3">Origem</th>
+                <th class="text-center" scope="col" colspan="3">Destino</th>
+                <th scope="col" rowspan="2">Valor</th>
+            </tr>
+            <tr>
+                <th scope="col">Banco</th>
+                <th scope="col">Agência</th>
+                <th scope="col">Conta</th>
+                <th scope="col">Banco</th>
+                <th scope="col">Agência</th>
+                <th scope="col">Conta</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for transacao in transacoes_suspeitas %}
+            <tr>
+                <td>{{transacao.banco_origem}}</td>
+                <td>{{transacao.agencia_origem}}</td>        
+                <td>{{transacao.conta_origem}}</td>
+                <td>{{transacao.banco_destino}}</td>
+                <td>{{transacao.agencia_destino}}</td>        
+                <td>{{transacao.conta_destino}}</td>  
+                <td>{{transacao.valor_transacao}}</td>         
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h1 class="texto-cor-especial">Contas suspeitas</h1>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Banco</th>
+                <th scope="col">Agência</th>
+                <th scope="col">Conta</th>
+                <th scope="col">Valor movimentado</th>
+                <th scope="col">Tipo movimentação</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for conta in contas_suspeitas %}
+                    <tr>
+                        <td>{{conta.banco}}</td> 
+                        <td>{{conta.agencia}}</td>
+                        <td>{{conta.conta}}</td>
+                        <td>{{conta.valor_transacao__sum}}</td>
+                        <td>{{conta.tipo_movimentacao}}</td>               
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h1 class="texto-cor-especial">Agências suspeitas</h1>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Banco</th>
+                <th scope="col">Agência</th>
+                <th scope="col">Valor movimentado</th>
+                <th scope="col">Tipo movimentação</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for agencia in agencias_suspeitas %}
+                    <tr>
+                        <td>{{agencia.banco}}</td> 
+                        <td>{{agencia.agencia}}</td>
+                        <td>{{agencia.valor_transacao__sum}}</td>
+                        <td>{{agencia.tipo_movimentacao}}</td>               
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block footer %} 
+<script>
+    $("#datepicker").datepicker({ 
+		dateFormat: 'mm/yy',
+		changeMonth: true,
+	    changeYear: true,
+	    showButtonPanel: true,
+        monthNames: [ "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" ],
+        monthNamesShort: [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
+        onClose: function(dateText, inst) {  
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val(); 
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val(); 
+            $(this).datepicker('setDate', new Date(year, month, 1)); 
+        }
+	});
+	
+	$("#datepicker").focus(function () {
+		$(".ui-datepicker-calendar").hide();
+		
+	});
+</script>
+
+{% endblock %}
+</body>
+</html>

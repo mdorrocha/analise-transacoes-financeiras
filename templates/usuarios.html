@@ -1,0 +1,35 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+{% include 'partials/messages.html' %}
+    <a class="btn botao-cor-especial btn-nohover" href="{% url 'cadastrar-usuario'%}" role="button">Novo</a>              
+    <h1 class="texto-cor-especial">Lista de Usuários</h1>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Email</th>
+                <th scope="col">Opções</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{user.id}}</td>
+                <td>{{user.username}}</td>        
+                <td>{{user.email}}</td>
+                <td>
+                    <a class="btn botao-cor-especial btn-nohover" href="{% url 'atualizar-usuario' user.id %}" role="button">Editar</a>
+                    <a class="btn botao-remover btn-nohover" href="{% url 'remover-usuario' user.id %}" role="button">Remover</a>
+                </td>            
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+</body>
+</html>
