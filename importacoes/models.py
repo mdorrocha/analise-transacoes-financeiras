@@ -47,7 +47,7 @@ class Transacao(models.Model):
         return transacoes
 
     @staticmethod
-    def listar_atividades_suspeitas(periodo, limite=100000.00):
+    def listar_atividades_suspeitas(periodo, limite=1000000.00):
         TIPO_ANALISE_CONTA = 'conta'
         TIPO_ANALISE_AGENCIA = 'agencia'
         agrupar_por = {

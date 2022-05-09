@@ -36,7 +36,7 @@ def analisar_transacoes_suspeitas(periodo):
     # pesquisa por transações suspeitas
     transacoes = Transacao.listar_transacoes_por_mes_ano(periodo)
     for transacao in transacoes:
-        if transacao.eh_transacao_suspeita(10000.00):
+        if transacao.eh_transacao_suspeita():
             lista_transacoes_suspeitas.append(transacao)
     # pesquisa por atividades suspeitas por contas e agências
     analises = Transacao.listar_atividades_suspeitas(periodo)
