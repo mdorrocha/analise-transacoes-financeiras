@@ -72,3 +72,6 @@ A funcionalidade permite a análise de transações suspeitas. Uma transação d
 # Acesso ao Projeto
 
 https://transacoesfinanceiras.herokuapp.com/
+
+Usuário: Admin
+Senha: alurabackend3
