@@ -7,10 +7,16 @@ class UsuarioForm(forms.ModelForm):
         model = User
         fields = ('username', 'email')
 
-    def clean(self):
-        username = self.cleaned_data.get('username')
+    def clean_email(self):
         email = self.cleaned_data.get('email')
-        if User.objects.filter(username=username).exclude(id=self.instance.id):
-            raise forms.ValidationError('O nome de usuário não está disponível')
+        if not email:
+            raise forms.ValidationError('Este campo é obrigatório')
         if User.objects.filter(email=email).exclude(id=self.instance.id):
             raise forms.ValidationError('O email já foi cadastrado para outro usuário')
+        return email
+            
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exclude(id=self.instance.id):
+            raise forms.ValidationError('O nome de usuário não está disponível')
+        return username
