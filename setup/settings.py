@@ -133,4 +133,4 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT')
 
 
-#django_heroku.settings(locals())
+django_heroku.settings(locals())
